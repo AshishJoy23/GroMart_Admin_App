@@ -1,26 +1,18 @@
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
+import '../../../controllers/controllers.dart';
 import '../../../models/models.dart';
 import '../../widgets/widgets.dart';
 
 class EachCategoryScreen extends StatelessWidget {
   final CategoryModel category;
-  const EachCategoryScreen({
+  EachCategoryScreen({
     super.key,
     required this.category,
   });
 
-  static const String routeName = '/each_category';
 
-  static Route route({required CategoryModel category}) {
-    return MaterialPageRoute(
-      settings: const RouteSettings(name: routeName),
-      builder: (_) => EachCategoryScreen(
-        category: category,
-      ),
-    );
-  }
-
+  final ProductController productController = Get.put(ProductController());
   @override
   Widget build(BuildContext context) {
     final List<ProductModel> categoryProducts = ProductModel.products
@@ -39,7 +31,13 @@ class EachCategoryScreen extends StatelessWidget {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: CustomAppBarWidget(title: category.name, actionList: const []),
+        appBar: CustomAppBarWidget(
+          title: category.name,
+          actionList: const [],
+          leadingOnPressed: () {
+            Get.back();
+          },
+        ),
         body: GridView.builder(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
           itemCount: categoryProducts.length,
@@ -53,7 +51,7 @@ class EachCategoryScreen extends StatelessWidget {
             return Center(
               child: ProductCardWidget(
                 product: categoryProducts[index],
-                widthFactor: 2.5,
+                productController: productController,
               ),
             );
           },

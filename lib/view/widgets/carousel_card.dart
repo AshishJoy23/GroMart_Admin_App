@@ -25,8 +25,8 @@ class CarouselCardWidget extends StatelessWidget {
                     fit: BoxFit.fill,
                     width: 1000.0,
                   )
-                : Image.asset(
-                    product!.imageUrl,
+                : Image.network(
+                    product!.imageUrls[0],
                     fit: BoxFit.fill,
                     width: 1000.0,
                   ),

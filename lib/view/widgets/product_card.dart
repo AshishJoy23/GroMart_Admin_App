@@ -1,39 +1,42 @@
 import 'dart:developer';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
+import 'package:gromart_admin_app/view/screens/product/edit_product.dart';
+import '../../controllers/controllers.dart';
 import '../../models/models.dart';
+import '../../services/services.dart';
+import '../screens/screens.dart';
 
 class ProductCardWidget extends StatelessWidget {
   final ProductModel product;
-  final double widthFactor;
-  final IconData iconData;
-  const ProductCardWidget({
+  final ProductController productController;
+  ProductCardWidget({
     super.key,
     required this.product,
-    this.widthFactor = 2.8,
-    this.iconData = Icons.delete_forever_outlined,
+    required this.productController,
   });
+
+  final DatabaseServices database = DatabaseServices();
 
   @override
   Widget build(BuildContext context) {
     var heightScrn = MediaQuery.of(context).size.height / 5;
-    var widthScrn = MediaQuery.of(context).size.width / widthFactor;
+    var widthScrn = MediaQuery.of(context).size.width / 2.5;
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(
-          context,
-          '/product',
-          arguments: product,
-        );
+        Get.to(() => ProductScreen(
+              product: product,
+              productController: productController,
+            ));
       },
       child: Stack(
         children: [
           SizedBox(
             width: widthScrn,
             height: heightScrn,
-            child: Image.asset(
-              product.imageUrl,
+            child: Image.network(
+              product.imageUrls[0],
               fit: BoxFit.cover,
             ),
           ),
@@ -46,20 +49,53 @@ class ProductCardWidget extends StatelessWidget {
               ),
               child: Align(
                 alignment: Alignment.topRight,
-                child: IconButton(
-                  onPressed: iconData == Icons.delete_forever_outlined
-                      ? () {
-                          log('fav added');
-                        }
-                      : () {
-                          log('fav deleted');
+                child: PopupMenuButton<String>(
+                  color: Colors.white,
+                  iconSize: 30,
+                  padding: const EdgeInsets.all(1.0),
+                  itemBuilder: (BuildContext context) =>
+                      <PopupMenuEntry<String>>[
+                    PopupMenuItem<String>(
+                      value: "Edit",
+                      child: TextButton(
+                        onPressed: () async{
+                          await Get.to(() => EditProductScreen(
+                                product: product,
+                                productController: productController,
+                              ));
+                          Get.back();
                         },
-                  icon: Icon(
-                    iconData,
-                    color: Colors.white,
-                    size: 24,
-                  ),
+                        child: Text(
+                          'Edit',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                    ),
+                    PopupMenuItem<String>(
+                      value: "Delete",
+                      child: TextButton(
+                        onPressed: () async {
+                          await database.deleteProduct(product.id);
+                          Get.back();
+                        },
+                        child: Text(
+                          'Delete',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
+                // IconButton(
+                //   onPressed:() {
+                //           log('fav deleted');
+                //         },
+                //   icon: Icon(
+                //     Icons.delete_forever_outlined,
+                //     color: Colors.white,
+                //     size: 24,
+                //   ),
+                // ),
               ),
             ),
           ),
@@ -81,25 +117,20 @@ class ProductCardWidget extends StatelessWidget {
                       children: [
                         Text(
                           product.name,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(
-                                color: Colors.white,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.titleMedium!.copyWith(
+                                    color: Colors.white,
+                                  ),
                         ),
                         Text(
                           '\$${product.price}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .copyWith(
-                                color: Colors.white,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.titleSmall!.copyWith(
+                                    color: Colors.white,
+                                  ),
                         ),
                       ],
                     ),
-                    
                   ],
                 ),
               ),

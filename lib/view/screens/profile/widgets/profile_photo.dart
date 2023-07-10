@@ -52,9 +52,9 @@ class ProfilePhotoWidget extends StatelessWidget {
                         ),
                         content: Column(
                           mainAxisSize: MainAxisSize.min,
-                          children: const [
-                            MainButtonWidget(buttonText: 'Open Camera',heightFactor: 0.05,),
-                            MainButtonWidget(buttonText: 'Open Gallery',heightFactor: 0.05,),
+                          children: [
+                            MainButtonWidget(buttonText: 'Open Camera',heightFactor: 0.05,onPressed: (){},),
+                            MainButtonWidget(buttonText: 'Open Gallery',heightFactor: 0.05,onPressed: (){},),
                           ],
                         ),
                       );

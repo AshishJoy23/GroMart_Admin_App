@@ -1,22 +1,18 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:gromart_admin_app/view/screens/screens.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
-  static const String routeName = '/splash';
-
-  static Route route() {
-    return MaterialPageRoute(
-      settings: const RouteSettings(name: routeName),
-      builder: (_) => const SplashScreen(),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     Timer(const Duration(seconds: 2), () {
-      Navigator.of(context).pushReplacementNamed('/');
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const GetStartedPage(),
+        ),
+      );
     });
     return Scaffold(
       backgroundColor: const Color(0xff4CAF50),

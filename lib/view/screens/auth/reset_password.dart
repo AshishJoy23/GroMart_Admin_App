@@ -2,21 +2,13 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../main.dart';
 import '../../config/config.dart';
 import '../../widgets/widgets.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   const ResetPasswordPage({super.key});
-
-  static const String routeName = '/forgot';
-
-  static Route route() {
-    return MaterialPageRoute(
-      settings: const RouteSettings(name: routeName),
-      builder: (_) => const ResetPasswordPage(),
-    );
-  }
 
   @override
   State<ResetPasswordPage> createState() => _ResetPasswordPageState();
@@ -46,9 +38,12 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
         ),
       ),
       child: Scaffold(
-        appBar: const CustomAppBarWidget(
+        appBar: CustomAppBarWidget(
           title: 'Reset Password',
           actionList: [],
+          leadingOnPressed: () {
+            Get.back();
+          },
         ),
         body: Form(
           key: formKey,

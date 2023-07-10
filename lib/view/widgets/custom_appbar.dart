@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CustomAppBarWidget extends StatelessWidget with PreferredSizeWidget {
   final String title;
   final List<Widget> actionList;
+  final VoidCallback leadingOnPressed;
   const CustomAppBarWidget({
     super.key,
     required this.title,
     required this.actionList,
+    required this.leadingOnPressed,
   });
 
   @override
@@ -14,9 +17,7 @@ class CustomAppBarWidget extends StatelessWidget with PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.transparent,
       leading: IconButton(
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
+        onPressed: leadingOnPressed,
         icon: const Icon(
           Icons.arrow_back_ios,
           color: Colors.black,

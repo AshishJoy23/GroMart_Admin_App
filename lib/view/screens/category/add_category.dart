@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:gromart_admin_app/view/widgets/widgets.dart';
 
 class AddCategoryScreen extends StatelessWidget {
@@ -22,8 +23,13 @@ class AddCategoryScreen extends StatelessWidget {
         ),
       ),
       child: Scaffold(
-        appBar: const CustomAppBarWidget(
-            title: 'Add New Category', actionList: []),
+        appBar: CustomAppBarWidget(
+          title: 'Add New Category',
+          actionList: [],
+          leadingOnPressed: () {
+            Get.back();
+          },
+        ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -31,6 +37,7 @@ class AddCategoryScreen extends StatelessWidget {
             children: [
               TextField(
                 controller: productNameController,
+                keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   labelText: 'Category Name',
                 ),
@@ -55,9 +62,9 @@ class AddCategoryScreen extends StatelessWidget {
               const SizedBox(height: 24.0),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xff388E3C),
-                minimumSize: const Size.fromHeight(55),
-              ),
+                  backgroundColor: const Color(0xff388E3C),
+                  minimumSize: const Size.fromHeight(55),
+                ),
                 onPressed: () {},
                 child: const Text('Add Product'),
               ),

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../config/config.dart';
 import '../../widgets/widgets.dart';
@@ -37,7 +38,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
   @override
   Widget build(BuildContext context) {
     return isEmailVerified
-        ? const HomeScreen()
+        ? HomeScreen()
         : Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -50,9 +51,12 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
               ),
             ),
             child: Scaffold(
-              appBar: const CustomAppBarWidget(
+              appBar: CustomAppBarWidget(
                 title: 'Verify Email',
                 actionList: [],
+                leadingOnPressed: () {
+                  Get.back();
+                },
               ),
               body: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -106,7 +110,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                         Expanded(
                           child: TextButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black26,
+                                backgroundColor: Colors.black26,
                                 side: const BorderSide(
                                   color: Color(0xff388E3C),
                                   width: 1.5,

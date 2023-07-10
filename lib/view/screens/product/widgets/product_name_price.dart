@@ -23,30 +23,42 @@ class ProductNameAndPrice extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10.0),
+          padding: const EdgeInsets.symmetric(
+            vertical: 10.0,
+            horizontal: 10,
+          ),
           child: Row(
             children: [
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        product.name,
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
-                      Text(
-                        '\$${product.price}',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      Text(
-                        '4.5 Rating',
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                    ],
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      product.name,
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                    Text(
+                      '\$${product.price}',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    Text(
+                      product.category,
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                  ],
                 ),
+              ),
+              Column(
+                children: [
+                  Text(
+                    'Stock',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  Text(
+                    product.quantity.toString(),
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                ],
               ),
             ],
           ),

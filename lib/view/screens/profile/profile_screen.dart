@@ -1,24 +1,17 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
-
 import '../../widgets/widgets.dart';
 import '../screens.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
-  static const String routeName = '/profile';
-
-  static Route route() {
-    return MaterialPageRoute(
-      settings: const RouteSettings(name: routeName),
-      builder: (_) => const ProfileScreen(),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    TextEditingController nameController = TextEditingController();
+    TextEditingController emailController = TextEditingController();
+    TextEditingController phoneController = TextEditingController();
+
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
@@ -54,22 +47,28 @@ class ProfileScreen extends StatelessWidget {
               height: 10,
             ),
             const SectionTitleWidget(title: 'PERSONAL DETAILS'),
-            const CustomTextFormField(
+            CustomTextFormField(
+              textController: nameController,
               hintText: 'Enter your Name..',
               labelText: 'Abcdefg Hijkl',
               iconData: Icons.person,
             ),
-            const CustomTextFormField(
+            CustomTextFormField(
+              textController: emailController,
               hintText: 'Enter your Email..',
               labelText: 'Abcdefg Hijkl',
               iconData: Icons.email,
             ),
-            const CustomTextFormField(
+            CustomTextFormField(
+              textController: phoneController,
               hintText: 'Enter your Phone..',
               labelText: 'Abcdefg Hijkl',
               iconData: Icons.phone,
             ),
-            MainButtonWidget(buttonText: 'Save Changes',),
+            MainButtonWidget(
+              buttonText: 'Save Changes',
+              onPressed: (){},
+            ),
           ],
         ),
         bottomNavigationBar: const MainBottomNavBar(),
@@ -77,4 +76,3 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 }
-

@@ -1,32 +1,24 @@
 import 'dart:developer';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:gromart_admin_app/controllers/product_controller.dart';
 import 'package:gromart_admin_app/models/models.dart';
 import '../../widgets/widgets.dart';
 import '../screens.dart';
 
 class ProductScreen extends StatelessWidget {
   final ProductModel product;
+  final ProductController productController;
   const ProductScreen({
     super.key,
     required this.product,
+    required this.productController,
   });
-
-  static const String routeName = '/product';
-
-  static Route route({required ProductModel product}) {
-    return MaterialPageRoute(
-      settings: const RouteSettings(name: routeName),
-      builder: (_) => ProductScreen(
-        product: product,
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
-    var textData =
-        'Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. ';
+    var size = MediaQuery.of(context).size;
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
@@ -42,34 +34,56 @@ class ProductScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         appBar: CustomAppBarWidget(
           title: 'Product Details',
-          actionList: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.edit,color: Colors.black,),
+          actionList: const [
+            // IconButton(
+            //   onPressed: () {},
+            //   icon: const Icon(Icons.edit,color: Colors.black,),
+            // ),
+            SizedBox(
+              width: 10,
             ),
-            const SizedBox(width: 10,),
           ],
+          leadingOnPressed: () {
+            Get.back();
+          },
         ),
         body: ListView(
           children: [
-            CarouselSlider(
-              options: CarouselOptions(
-                aspectRatio: 1.45,
-                viewportFraction: 0.96,
-                enlargeCenterPage: true,
-                enlargeStrategy: CenterPageEnlargeStrategy.height,
-              ),
-              items: [
-                CarouselCardWidget(
-                  product: product,
+            // CarouselSlider(
+            //   options: CarouselOptions(
+            //     aspectRatio: 1.45,
+            //     viewportFraction: 0.96,
+            //     enlargeCenterPage: true,
+            //     enlargeStrategy: CenterPageEnlargeStrategy.height,
+            //   ),
+            //   items: [
+            //     CarouselCardWidget(
+            //       product: product,
+            //     ),
+            //   ],
+            // ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: SizedBox(
+                height: size.height * 0.3,
+                child: PageView.builder(
+                  itemCount: product.imageUrls.length,
+                  itemBuilder: (context, index) {
+                    return Image.network(
+                      product.imageUrls[index],
+                      fit: BoxFit.cover,
+                    );
+                  },
                 ),
-              ],
+              ),
             ),
             ProductNameAndPrice(product: product),
             DetailsExpansionTileWidget(
-                textData: textData, titleData: 'Product Information'),
+                textData: product.description,
+                titleData: 'Product Information'),
             DetailsExpansionTileWidget(
-                textData: textData, titleData: 'Delivery Information'),
+                textData: product.description,
+                titleData: 'Delivery Information'),
           ],
         ),
         // bottomNavigationBar: const ProductBottomAppBar(),

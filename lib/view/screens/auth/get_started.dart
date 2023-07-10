@@ -7,14 +7,6 @@ import '../screens.dart';
 class GetStartedPage extends StatelessWidget {
   const GetStartedPage({super.key});
 
-  static const String routeName = '/getStarted';
-
-  static Route route() {
-    return MaterialPageRoute(
-      settings: const RouteSettings(name: routeName),
-      builder: (_) => const GetStartedPage(),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {

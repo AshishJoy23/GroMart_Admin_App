@@ -13,20 +13,23 @@ class DetailsExpansionTileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(
-      initiallyExpanded: true,
-      title: SectionTitleWidget(
-        title: titleData,
-        size: 0.0,
-      ),
-      children: [
-        ListTile(
-          title: Text(
-            textData,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: ExpansionTile(
+        initiallyExpanded: true,
+        title: SectionTitleWidget(
+          title: titleData,
+          size: 0.0,
         ),
-      ],
+        children: [
+          ListTile(
+            title: Text(
+              textData,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

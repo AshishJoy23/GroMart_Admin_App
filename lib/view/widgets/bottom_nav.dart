@@ -1,4 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:gromart_admin_app/view/screens/category/category_screen.dart';
+import 'package:gromart_admin_app/view/screens/home/home_screen.dart';
+import 'package:gromart_admin_app/view/screens/profile/profile_screen.dart';
 
 class MainBottomNavBar extends StatelessWidget {
   const MainBottomNavBar({
@@ -18,19 +23,21 @@ class MainBottomNavBar extends StatelessWidget {
           children: [
             IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/');
+                Get.to(()=>HomeScreen());
+                //Navigator.pushNamed(context, '/');
               },
               icon: const Icon(Icons.home,size: 26,),
             ),
             IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/category');
+                Get.to(()=>const CategoryScreen());
+                //Navigator.pushNamed(context, '/category');
               },
               icon: const Icon(Icons.category,size: 26,),
             ),
             IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/wishlist');
+                //Navigator.pushNamed(context, '/wishlist');
               },
               icon: const Icon(Icons.track_changes,size: 26,),
             ),
@@ -42,7 +49,8 @@ class MainBottomNavBar extends StatelessWidget {
             // ),
             IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/profile');
+                Get.to(()=>const ProfileScreen());
+                //Navigator.pushNamed(context, '/profile');
               },
               icon: const Icon(Icons.person,size: 26,),
             ),

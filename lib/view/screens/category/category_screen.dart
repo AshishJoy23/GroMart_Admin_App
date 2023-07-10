@@ -7,15 +7,6 @@ import '../screens.dart';
 class CategoryScreen extends StatelessWidget {
   const CategoryScreen({super.key});
 
-  static const String routeName = '/category';
-
-  static Route route() {
-    return MaterialPageRoute(
-      settings: const RouteSettings(name: routeName),
-      builder: (_) => const CategoryScreen(),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
