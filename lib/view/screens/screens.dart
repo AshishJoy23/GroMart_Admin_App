@@ -23,3 +23,9 @@ export 'category/widgets/category_card.dart';
 export 'product/widgets/product_add_image.dart';
 export 'product/widgets/product_details.dart';
 export 'product/add_product.dart';
+export 'category/add_category.dart';
+export 'category/edit_category.dart';
+export 'category/widgets/category_add_image.dart';
+export 'category/widgets/category_textfield.dart';
+
+

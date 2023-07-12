@@ -74,28 +74,6 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
             ),
-
-            // ProductCarouselWidget(
-            //   products: ProductModel.products,
-            // ),
-            // const SectionTitleWidget(
-            //   title: 'MOST POPULAR',
-            // ),
-            // ProductCarouselWidget(
-            //   products: ProductModel.products,
-            // ),
-            // const SectionTitleWidget(
-            //   title: 'TOP RATED',
-            // ),
-            // ProductCarouselWidget(
-            //   products: ProductModel.products,
-            // ),
-            // const SectionTitleWidget(
-            //   title: 'TODAY\'S SPECIAL',
-            // ),
-            // ProductCarouselWidget(
-            //   products: ProductModel.products,
-            // ),
           ],
         ),
         floatingActionButton: FloatingActionButton(

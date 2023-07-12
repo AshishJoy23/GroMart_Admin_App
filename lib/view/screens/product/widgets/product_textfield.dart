@@ -9,19 +9,16 @@ class ProductTextFormField extends StatelessWidget {
   final String hintText;
   final IconData iconData;
   final bool type;
-  final int id;
   final bool isMoreLines;
-  ProductTextFormField({
+  const ProductTextFormField({
     super.key,
     required this.hintText,
     required this.iconData,
     this.type = false,
     required this.productController,
     required this.name,
-    this.id=0,
     this.isMoreLines=false,
   });
-  final DatabaseServices database = DatabaseServices();
 
 
   @override
@@ -51,7 +48,6 @@ class ProductTextFormField extends StatelessWidget {
           prefixIconColor: Colors.black54,
         ),
         onChanged: (value) {
-          //database.updateProduct(id, name, value);
           productController.newProduct.update(
             name,
             (_) => value,

@@ -86,16 +86,6 @@ class ProductCardWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                // IconButton(
-                //   onPressed:() {
-                //           log('fav deleted');
-                //         },
-                //   icon: Icon(
-                //     Icons.delete_forever_outlined,
-                //     color: Colors.white,
-                //     size: 24,
-                //   ),
-                // ),
               ),
             ),
           ),

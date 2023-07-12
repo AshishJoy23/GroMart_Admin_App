@@ -7,6 +7,7 @@ class CategoryController extends GetxController {
   
   var categories= <CategoryModel>[].obs;
   var newProduct = {}.obs;
+  var categoryImageUrl =  ''.obs;
 
   @override
   void onInit() {

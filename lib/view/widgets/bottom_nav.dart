@@ -30,7 +30,7 @@ class MainBottomNavBar extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                Get.to(()=>const CategoryScreen());
+                Get.to(()=> CategoryScreen());
                 //Navigator.pushNamed(context, '/category');
               },
               icon: const Icon(Icons.category,size: 26,),
