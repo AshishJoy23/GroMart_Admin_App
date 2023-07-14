@@ -16,6 +16,8 @@ class DetailsExpansionTileWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: ExpansionTile(
+        iconColor: Colors.black,
+        collapsedIconColor: Colors.black,
         initiallyExpanded: true,
         title: SectionTitleWidget(
           title: titleData,

@@ -27,5 +27,6 @@ export 'category/add_category.dart';
 export 'category/edit_category.dart';
 export 'category/widgets/category_add_image.dart';
 export 'category/widgets/category_textfield.dart';
+export 'product/widgets/custom_dropdown.dart';
 
 

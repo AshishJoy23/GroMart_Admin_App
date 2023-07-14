@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../controllers/controllers.dart';
@@ -15,9 +17,12 @@ class EachCategoryScreen extends StatelessWidget {
   final ProductController productController = Get.put(ProductController());
   @override
   Widget build(BuildContext context) {
-    final List<ProductModel> categoryProducts = ProductModel.products
+    final List<ProductModel> categoryProducts = productController.products
         .where((product) => product.category == category.name)
         .toList();
+        log(categoryProducts.toString());
+        log(category.name);
+        
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(

@@ -44,9 +44,10 @@ class HomeScreen extends StatelessWidget {
                 enlargeStrategy: CenterPageEnlargeStrategy.height,
                 autoPlay: true,
               ),
-              items: CategoryModel.categories
-                  .map((category) => CarouselCardWidget(category: category))
-                  .toList(),
+              items: List.generate(CategoryModel.categories.length, (index) => CarouselCardWidget(category: CategoryModel.categories[index])),
+              // items: CategoryModel.categories
+              //     .map((category) => CarouselCardWidget(category: category))
+              //     .toList(),
             ),
             const SectionTitleWidget(
               title: 'ALL PRODUCTS',

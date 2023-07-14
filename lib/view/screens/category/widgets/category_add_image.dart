@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../../controllers/controllers.dart';
 import '../../../../services/services.dart';
+import '../../../widgets/widgets.dart';
 
 class CategoryAddImageWidget extends StatelessWidget {
   const CategoryAddImageWidget({
@@ -26,61 +27,11 @@ class CategoryAddImageWidget extends StatelessWidget {
           horizontal: 10,
         ),
         child: (categoryController.categoryImageUrl.isEmpty)
-            ? InkWell(
-                onTap: () async {
-                  ImagePicker picker = ImagePicker();
-                  final XFile? image = await picker.pickImage(
-                    source: ImageSource.gallery,
-                  );
-                  if (image == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('No image was selected..'),
-                      ),
-                    );
-                  }
-                  if (image != null) {
-                    await storage.uploadCategoryImage(image);
-                    var imageUrl =
-                        await storage.getCategoryImageURL(image.name);
-                    categoryController.categoryImageUrl.value = imageUrl;
-                    await categoryController.newProduct.update(
-                      'imageUrl',
-                      (_) => categoryController.categoryImageUrl,
-                      ifAbsent: () => categoryController.categoryImageUrl,
-                    );
-
-                    log(categoryController.newProduct['imageUrl'].toString());
-                  }
-                },
-                child: Container(
-                  color: Colors.black,
-                  height: size.height * 0.15,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.add_circle,
-                          color: Colors.white,
-                          size: 36,
-                        ),
-                        Expanded(
-                          child: Center(
-                            child: Text(
-                              'Choose an image',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(color: Colors.white),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              )
+            ? AddImageButtonWidget(
+              onTapFunction: () async {
+                await pickImageFromGallery(context);
+              },
+            )
             : Stack(
                 children: [
                   SizedBox(
@@ -96,33 +47,7 @@ class CategoryAddImageWidget extends StatelessWidget {
                     right: 10,
                     child: FloatingActionButton(
                       onPressed: () async {
-                        ImagePicker picker = ImagePicker();
-                        final XFile? image = await picker.pickImage(
-                          source: ImageSource.gallery,
-                        );
-                        if (image == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('No image was selected..'),
-                            ),
-                          );
-                        }
-                        if (image != null) {
-                          await storage.uploadCategoryImage(image);
-                          var imageUrl =
-                              await storage.getCategoryImageURL(image.name);
-                          categoryController.categoryImageUrl.value = imageUrl;
-                          await categoryController.newProduct.update(
-                            'imageUrl',
-                            (_) => categoryController.categoryImageUrl,
-                            ifAbsent: () => categoryController.categoryImageUrl,
-                          );
-
-                          log(
-                            categoryController.newProduct['imageUrl']
-                                .toString(),
-                          );
-                        }
+                        await pickImageFromGallery(context);
                       },
                       backgroundColor: Colors.black87,
                       child: const Icon(
@@ -136,4 +61,31 @@ class CategoryAddImageWidget extends StatelessWidget {
       ),
     );
   }
+
+  Future pickImageFromGallery(BuildContext context) async {
+    ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(
+      source: ImageSource.gallery,
+    );
+    if (image == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('No image was selected..'),
+        ),
+      );
+    }
+    if (image != null) {
+      await storage.uploadCategoryImage(image);
+      var imageUrl = await storage.getCategoryImageURL(image.name);
+      categoryController.categoryImageUrl.value = imageUrl;
+      await categoryController.newProduct.update(
+        'imageUrl',
+        (_) => categoryController.categoryImageUrl,
+        ifAbsent: () => categoryController.categoryImageUrl,
+      );
+      log(categoryController.newProduct['imageUrl'].toString());
+    }
+  }
 }
+
+

@@ -23,11 +23,7 @@ class CategoryCardWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         log(category.name);
-        Navigator.pushNamed(
-          context,
-          '/each_category',
-          arguments: category,
-        );
+        Get.to(()=> EachCategoryScreen(category: category));
       },
       child: Stack(
         children: [

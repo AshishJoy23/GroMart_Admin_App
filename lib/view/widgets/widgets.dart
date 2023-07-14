@@ -8,3 +8,4 @@ export 'main_button.dart';
 export 'custom_drawer.dart';
 export 'search_bar.dart';
 export 'carousel_card.dart';
+export 'add_image_button.dart';
