@@ -1,15 +1,23 @@
 import 'package:get/get.dart';
+import 'package:gromart_admin_app/models/models.dart';
+import '../services/services.dart';
 
 class BannerController extends GetxController {
-  var bannerImageUrls = <dynamic>[].obs;
+  final DatabaseServices database = DatabaseServices();
+  
+  var banners = <BannerModel>[].obs;
+  var newBanner = {}.obs;
+  var bannerImageUrl = ''.obs;
+
   @override
   void onInit() {
-    bannerImageUrls.clear();
+    banners.bindStream(database.getBanners());
     super.onInit();
   }
+
   @override
   void onClose() {
-    bannerImageUrls.clear();
+    newBanner.clear();
     super.onClose();
   }
 }

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AddImageButtonWidget extends StatelessWidget {
+  final String title;
   final VoidCallback onTapFunction;
   const AddImageButtonWidget({
     super.key,
+    required  this.title,
     required this.onTapFunction,
   });
 
@@ -27,7 +29,7 @@ class AddImageButtonWidget extends StatelessWidget {
               Expanded(
                 child: Center(
                   child: Text(
-                    'Choose an image',
+                    title,
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium!

@@ -24,9 +24,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: theme(),
       home: const SplashScreen(),
-      getPages: [
-        GetPage(name: '/home', page: () => HomeScreen()),
-      ],
     );
   }
 }

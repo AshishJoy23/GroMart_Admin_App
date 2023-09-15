@@ -16,6 +16,7 @@ class CategoryCardWidget extends StatelessWidget {
   });
 
   final DatabaseServices database = DatabaseServices();
+  final StorageService storage = StorageService();
   @override
   Widget build(BuildContext context) {
     var heightScrn = MediaQuery.of(context).size.height / 5;
@@ -71,6 +72,7 @@ class CategoryCardWidget extends StatelessWidget {
                       child: TextButton(
                         onPressed: () async {
                           await database.deleteCategory(category.id);
+                          await storage.deleteCategoryImage(category.imageUrl);
                           Get.back();
                         },
                         child: Text(

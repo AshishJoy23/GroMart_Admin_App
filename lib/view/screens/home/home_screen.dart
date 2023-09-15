@@ -36,19 +36,7 @@ class HomeScreen extends StatelessWidget {
         body: ListView(
           children: [
             const SearchBarWidget(),
-            CarouselSlider(
-              options: CarouselOptions(
-                aspectRatio: 1.58,
-                viewportFraction: 0.93,
-                enlargeCenterPage: true,
-                enlargeStrategy: CenterPageEnlargeStrategy.height,
-                autoPlay: true,
-              ),
-              items: List.generate(CategoryModel.categories.length, (index) => CarouselCardWidget(category: CategoryModel.categories[index])),
-              // items: CategoryModel.categories
-              //     .map((category) => CarouselCardWidget(category: category))
-              //     .toList(),
-            ),
+            CustomBannerWidget(),
             const SectionTitleWidget(
               title: 'ALL PRODUCTS',
             ),

@@ -34,4 +34,26 @@ class StorageService {
         await storage.ref('category_images/$imageName').getDownloadURL();
     return downloadURL;
   }
+
+  Future<void> deleteCategoryImage(String imageUrl) async {
+    final Uri uri = Uri.parse(imageUrl);
+    final String imageName = uri.pathSegments.last;
+    await storage.ref(imageName).delete();
+  }
+
+  Future<void> uploadBannerImage(XFile image) async {
+    await storage.ref('banner_images/${image.name}').putFile(File(image.path));
+  }
+
+  Future<String> getBannerImageURL(String imageName) async {
+    String downloadURL =
+        await storage.ref('banner_images/$imageName').getDownloadURL();
+    return downloadURL;
+  }
+
+  Future<void> deleteBannerImage(String imageUrl) async {
+    final Uri uri = Uri.parse(imageUrl);
+    final String imageName = uri.pathSegments.last;
+    await storage.ref(imageName).delete();
+  }
 }

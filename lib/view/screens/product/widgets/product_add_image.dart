@@ -26,6 +26,7 @@ class ProductAddImageWidget extends StatelessWidget {
         ),
         child: (productController.productImageUrls.isEmpty)
             ? AddImageButtonWidget(
+              title: 'Choose an image',
                 onTapFunction: () async {
                   await pickImageFromGallery(context);
                 },

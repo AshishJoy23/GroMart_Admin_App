@@ -28,6 +28,7 @@ class CategoryAddImageWidget extends StatelessWidget {
         ),
         child: (categoryController.categoryImageUrl.isEmpty)
             ? AddImageButtonWidget(
+              title: 'Choose an image',
               onTapFunction: () async {
                 await pickImageFromGallery(context);
               },

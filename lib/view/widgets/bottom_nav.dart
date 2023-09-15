@@ -1,9 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:gromart_admin_app/view/screens/category/category_screen.dart';
-import 'package:gromart_admin_app/view/screens/home/home_screen.dart';
-import 'package:gromart_admin_app/view/screens/profile/profile_screen.dart';
+import 'package:gromart_admin_app/view/screens/screens.dart';
 
 class MainBottomNavBar extends StatelessWidget {
   const MainBottomNavBar({
@@ -37,9 +34,10 @@ class MainBottomNavBar extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
+                Get.to(()=> OrdersScreen());
                 //Navigator.pushNamed(context, '/wishlist');
               },
-              icon: const Icon(Icons.track_changes,size: 26,),
+              icon: const Icon(Icons.local_shipping,size: 26,),
             ),
             // IconButton(
             //   onPressed: () {

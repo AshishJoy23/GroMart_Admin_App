@@ -150,13 +150,13 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
         email: emailController.text.trim(),
       );
       Utils.showSnackBar(
-        'Password Reset Email Sent',
+        'Password Reset Email Sent',Colors.green,
       );
       navigatorKey.currentState!.pushNamed('/getStarted');
     } on FirebaseAuthException catch (e) {
       log(e.message!);
       Utils.showSnackBar(
-        e.message!,
+        e.message!,Colors.red
       );
       Navigator.of(context).pop();
     }

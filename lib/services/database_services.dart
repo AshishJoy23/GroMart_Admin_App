@@ -68,7 +68,10 @@ class DatabaseServices {
 
 //for categories
   Stream<List<CategoryModel>> getCategories() {
-    return firebaseFirestore.collection('categories').snapshots().map((snapshot) {
+    return firebaseFirestore
+        .collection('categories')
+        .snapshots()
+        .map((snapshot) {
       return snapshot.docs
           .map((doc) => CategoryModel.fromSnapshot(doc))
           .toList();
@@ -117,7 +120,10 @@ class DatabaseServices {
       String documentId = documentSnapshot.id;
       log(documentId);
       try {
-        await firebaseFirestore.collection('categories').doc(documentId).delete();
+        await firebaseFirestore
+            .collection('categories')
+            .doc(documentId)
+            .delete();
         log('Category deleted successfully.');
       } catch (error) {
         log('Error deleting category: $error');
@@ -126,4 +132,98 @@ class DatabaseServices {
       log('No matching document found.');
     }
   }
+
+  //for banners
+  Stream<List<BannerModel>> getBanners() {
+    return firebaseFirestore.collection('banners').snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) => BannerModel.fromSnapshot(doc)).toList();
+    });
+  }
+
+  Future<void> addBanner(BannerModel banner) {
+    return firebaseFirestore.collection('banners').add(banner.toMap());
+  }
+
+  Future<void> deleteBanner(int productId) async {
+    QuerySnapshot querySnapshot = await firebaseFirestore
+        .collection('banners')
+        .where('id', isEqualTo: productId)
+        .get();
+    log(querySnapshot.toString());
+    if (querySnapshot.docs.isNotEmpty) {
+      DocumentSnapshot documentSnapshot = querySnapshot.docs[0];
+      log(documentSnapshot.toString());
+      String documentId = documentSnapshot.id;
+      log(documentId);
+      try {
+        await firebaseFirestore.collection('banners').doc(documentId).delete();
+        log('Banner deleted successfully.');
+      } catch (error) {
+        log('Error deleting banner: $error');
+      }
+    } else {
+      log('No matching document found.');
+    }
+  }
+
+  //for orders
+
+  Stream<List<OrderModel>> getAllOrders() {
+    log('<<<<<<<<<getting orders>>>>>>>>>');
+    return FirebaseFirestore.instance
+        .collectionGroup('orders')
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs.map((doc) {
+        Map<String, dynamic> subDocData = doc.data();
+        log(subDocData.toString());
+        return OrderModel.fromSnapshot(subDocData);
+      }).toList();
+    });
+  }
+
+ //   try {
+  //     log('<<<<<<try block>>>>>>');
+  //     QuerySnapshot subcollectionQuerySnapshot =
+  //         await FirebaseFirestore.instance.collectionGroup('orders').get();
+
+  //     // Iterate through the documents in the subcollection
+  //     for (QueryDocumentSnapshot subDocumentSnapshot
+  //         in subcollectionQuerySnapshot.docs) {
+  //       Map<String, dynamic>? subDocumentData =
+  //           subDocumentSnapshot.data() as Map<String, dynamic>?;
+  //       //log(subDocumentData.toString());
+  //       if (subDocumentData != null) {
+  //         log('<<<<<<<<<<<<<<<<<<before convert>>>>>>>>>>>>>>>>>>');
+  //         log(subDocumentData.toString());
+  //   // Access the "name" field
+  //   final OrderModel order = OrderModel.fromSnapshot(subDocumentData);
+  //   log('<<<<<<<after convert to OrdeerModel>>>>>>>');
+  //   log(order.toString());
+  //   num? name = subDocumentData["grandTotal"];
+
+  //   // Do something with the "name" value
+  //   if (name != null) {
+  //     log("Name: $name");
+  //   }
+  // }
+  //       log('<<<<<<<<<<<each name>>>>>>>>>>>');
+  //       log(subDocumentData!['grandTotal'].toString());
+  //       // final OrderModel order = OrderModel(
+  //       //   email: email,
+  //       //   orderDetailsMap: orderDetailsMap,
+  //       //   address: address,
+  //       //   paymentMethod: paymentMethod,
+  //       //   placedAt: placedAt,
+  //       //   subTotal: subTotal,
+  //       //   deliveryFee: deliveryFee,
+  //       //   grandTotal: grandTotal,
+  //       // );
+  //       // Access fields in the subdocument as needed
+  //       // ...
+  //     }
+  //   } catch (error) {
+  //     log('<<<<<<catch block>>>>>>');
+  //     log("Error getting documents: $error");
+  //   }
 }

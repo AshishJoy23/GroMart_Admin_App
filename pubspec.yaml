@@ -41,6 +41,7 @@ dependencies:
   get: ^4.6.5
   google_fonts: null
   image_picker: ^1.0.0
+  panara_dialogs: null
 
 dev_dependencies:
   flutter_lints: ^2.0.0
