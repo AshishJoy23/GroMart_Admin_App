@@ -182,7 +182,24 @@ class DatabaseServices {
     });
   }
 
- //   try {
+  Future<void> updateOrder(OrderModel order) async {
+    try {
+      await firebaseFirestore
+          .collection('users')
+          .doc(order.email)
+          .collection('orders')
+          .doc(order.id)
+          .set(
+            order.toMap(),
+            SetOptions(merge: true),
+          );
+      log('Order updated successfully.');
+    } catch (error) {
+      log('Error updating order: $error');
+    }
+  }
+
+  //   try {
   //     log('<<<<<<try block>>>>>>');
   //     QuerySnapshot subcollectionQuerySnapshot =
   //         await FirebaseFirestore.instance.collectionGroup('orders').get();

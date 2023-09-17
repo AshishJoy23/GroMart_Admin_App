@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gromart_admin_app/controllers/controllers.dart';
 import 'package:gromart_admin_app/view/screens/screens.dart';
 
 class MainBottomNavBar extends StatelessWidget {
@@ -9,6 +10,7 @@ class MainBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final OrderController orderController = Get.put(OrderController());
     return Container(
       height: 70,
       color: Colors.transparent,
@@ -34,7 +36,8 @@ class MainBottomNavBar extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                Get.to(()=> OrdersScreen());
+                orderController.loadAllOrders();
+                Get.to(()=> const OrdersScreen());
                 //Navigator.pushNamed(context, '/wishlist');
               },
               icon: const Icon(Icons.local_shipping,size: 26,),

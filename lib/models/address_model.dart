@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class AddressModel extends Equatable {
@@ -67,19 +65,19 @@ class AddressModel extends Equatable {
     );
   }
 
-  // Map<String, dynamic> toMap() => {
-  //       'id': id,
-  //       'name': name,
-  //       'phone': phone,
-  //       'house': house,
-  //       'street': street,
-  //       'city': city,
-  //       'state': state,
-  //       'pincode': pincode,
-  //       'type': type,
-  //     };
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'name': name,
+        'phone': phone,
+        'house': house,
+        'street': street,
+        'city': city,
+        'state': state,
+        'pincode': pincode,
+        'type': type,
+      };
 
-  // String toJson() {
-  //   return json.encode(toMap());
-  // }
+  String toJson() {
+    return json.encode(toMap());
+  }
 }

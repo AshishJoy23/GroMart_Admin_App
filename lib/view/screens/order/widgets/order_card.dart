@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gromart_admin_app/controllers/controllers.dart';
 import 'package:gromart_admin_app/models/models.dart';
 import 'package:gromart_admin_app/view/config/config.dart';
 import 'package:gromart_admin_app/view/screens/screens.dart';
@@ -17,6 +18,7 @@ class OrderCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final OrderController orderController = Get.put(OrderController());
     var size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(5.0),
@@ -182,6 +184,7 @@ class OrderCardWidget extends StatelessWidget {
                           Utils.showAlertDialogBox(context, 'Are You Sure?',
                               'Do you wnat to cancel the entire order.', () {
                             log('cancelled');
+                            orderController.cancelOrder(order: order);
                             Utils.showSnackBar('Order is cancelled', Colors.redAccent);
                             Get.back();
                           });
@@ -197,6 +200,7 @@ class OrderCardWidget extends StatelessWidget {
                               'Are You Sure?',
                               'Do you wnat to confirm the entire order.',
                               () {
+                                orderController.confirmOrder(order: order);
                                 Utils.showSnackBar('Order is confirmed', Colors.green);
                                 Get.back();
                                 log('confirmed');

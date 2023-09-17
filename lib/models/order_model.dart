@@ -47,23 +47,23 @@ class OrderModel extends Equatable {
         grandTotal,
       ];
 
-  // Map<String, dynamic> toMap() {
-  //   String addressToJson = address!.toJson();
-  //   return {
-  //     'id': id,
-  //     'email': email,
-  //     'orderDetailsMap': orderDetailsMap,
-  //     'address': addressToJson,
-  //     'paymentMethod': paymentMethod,
-  //     'placedAt': placedAt,
-  //     'isPlaced': isPlaced,
-  //     'isConfirmed': isConfirmed,
-  //     'isCancelled': isCancelled,
-  //     'subTotal': subTotal,
-  //     'deliveryFee': deliveryFee,
-  //     'grandTotal': grandTotal,
-  //   };
-  // }
+  Map<String, dynamic> toMap() {
+    String addressToJson = address!.toJson();
+    return {
+      'id': id,
+      'email': email,
+      'orderDetailsMap': orderDetailsMap,
+      'address': addressToJson,
+      'paymentMethod': paymentMethod,
+      'placedAt': placedAt,
+      'isPlaced': isPlaced,
+      'isConfirmed': isConfirmed,
+      'isCancelled': isCancelled,
+      'subTotal': subTotal,
+      'deliveryFee': deliveryFee,
+      'grandTotal': grandTotal,
+    };
+  }
 
   static OrderModel fromSnapshot(Map<String, dynamic> snap) {
     AddressModel addressFromJson =
