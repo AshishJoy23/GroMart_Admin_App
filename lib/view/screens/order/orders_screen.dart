@@ -14,7 +14,7 @@ class OrdersScreen extends StatelessWidget {
     final OrderController orderController = Get.put(OrderController());
 
     log(orderController.pendingOrders.toString());
-    orderController.loadAllOrders();
+    //orderController.loadAllOrders();
     return Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -52,8 +52,42 @@ class OrdersScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Icon(Icons.dashboard, size: 100),
-                const Icon(Icons.settings, size: 100),
+                Obx(
+                  ()=> Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: ListView.builder(
+                      //padding: EdgeInsets.all(10),
+                      shrinkWrap: true,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      itemCount: orderController.activeOrders.length,
+                      itemBuilder: (context, index) {
+                        var orderItem = orderController.activeOrders[index];
+                        return Column(children: [
+                          Text(orderItem['orderId']),
+                          Text(orderItem['quantity'].toString()),
+                        ],);
+                      },
+                    ),
+                  ),
+                ),
+                Obx(
+                  ()=> Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: ListView.builder(
+                      //padding: EdgeInsets.all(10),
+                      shrinkWrap: true,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      itemCount: orderController.completedOrders.length,
+                      itemBuilder: (context, index) {
+                        var orderItem = orderController.completedOrders[index];
+                        return Column(children: [
+                          Text(orderItem['orderId']),
+                          Text(orderItem['quantity'].toString()),
+                        ],);
+                      },
+                    ),
+                  ),
+                ),
               ],
             ),
             bottomNavigationBar: const MainBottomNavBar(),

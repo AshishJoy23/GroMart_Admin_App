@@ -12,8 +12,8 @@ class OrderController extends GetxController {
 
   var orders = <OrderModel>[].obs;
   var pendingOrders = <OrderModel>[].obs;
-  var activeOrders = <OrderModel>[].obs;
-  var completedOrders = <OrderModel>[].obs;
+  var activeOrders = <Map<String, dynamic>>[].obs;
+  var completedOrders = <Map<String, dynamic>>[].obs;
 
   @override
   void onInit() async {
@@ -24,12 +24,39 @@ class OrderController extends GetxController {
 
   void loadAllOrders() {
     pendingOrders.value = orders
-        .where((order) => (order.isPlaced == true &&
-            order.isCancelled == false &&
-            order.isConfirmed == false))
+        .where((order) =>
+            (order.isPlaced && !order.isCancelled && !order.isConfirmed))
         .toList();
-    log('<<<<<<<laoding>>>>>>>');
+    log('<<<<<<<pending orders>>>>>>>');
     log(pendingOrders.toString());
+    log('<<<<<<<<<<<-------------------->>>>>>>>>>>');
+    //active orders
+    for (var order in orders) {
+      if (order.isConfirmed && !order.isCancelled) {
+        for (var orderItem in order.orderDetailsMap) {
+          if (orderItem['isConfirmed'] && !orderItem['isDelivered'] ||
+              !orderItem['isCancelled']) {
+            activeOrders.add(orderItem);
+          }
+        }
+      }
+    }
+    log('<<<<<<<active orders>>>>>>>');
+    log(activeOrders.toString());
+    log('<<<<<<<<<<<-------------------->>>>>>>>>>>');
+    //completed orders
+    for (var order in orders) {
+      if (order.isConfirmed || order.isCancelled) {
+        for (var orderItem in order.orderDetailsMap) {
+          if (orderItem['isDelivered'] || orderItem['isCancelled']) {
+            completedOrders.add(orderItem);
+          }
+        }
+      }
+    }
+    log('<<<<<<<completed orders>>>>>>>');
+    log(completedOrders.toString());
+    log('<<<<<<<<<<<-------------------->>>>>>>>>>>');
   }
 
   void cancelOrder({required OrderModel order}) async {

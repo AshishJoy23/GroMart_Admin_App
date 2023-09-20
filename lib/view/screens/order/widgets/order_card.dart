@@ -27,7 +27,7 @@ class OrderCardWidget extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(5)),
         child: GestureDetector(
           onTap: () {
-            Get.to(() => OrderInfoScreen());
+            Get.to(() => OrderInfoScreen(order: order));
           },
           child: Container(
             height: size.height * 0.3,
@@ -185,7 +185,8 @@ class OrderCardWidget extends StatelessWidget {
                               'Do you wnat to cancel the entire order.', () {
                             log('cancelled');
                             orderController.cancelOrder(order: order);
-                            Utils.showSnackBar('Order is cancelled', Colors.redAccent);
+                            Utils.showSnackBar(
+                                'Order is cancelled', Colors.redAccent);
                             Get.back();
                           });
                         },
@@ -193,21 +194,23 @@ class OrderCardWidget extends StatelessWidget {
                         isSubButton: true,
                       ),
                       MainButtonWidget(
-                          buttonText: 'Confirm',
-                          onPressed: () {
-                            Utils.showAlertDialogBox(
-                              context,
-                              'Are You Sure?',
-                              'Do you wnat to confirm the entire order.',
-                              () {
-                                orderController.confirmOrder(order: order);
-                                Utils.showSnackBar('Order is confirmed', Colors.green);
-                                Get.back();
-                                log('confirmed');
-                              },
-                            );
-                          },
-                          heightFactor: 0.045),
+                        buttonText: 'Confirm',
+                        onPressed: () {
+                          Utils.showAlertDialogBox(
+                            context,
+                            'Are You Sure?',
+                            'Do you wnat to confirm the entire order.',
+                            () {
+                              orderController.confirmOrder(order: order);
+                              Utils.showSnackBar(
+                                  'Order is confirmed', Colors.green);
+                              Get.back();
+                              log('confirmed');
+                            },
+                          );
+                        },
+                        heightFactor: 0.045,
+                      ),
                     ],
                   ),
                 ],
