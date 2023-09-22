@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:gromart_admin_app/controllers/controllers.dart';
 import 'package:gromart_admin_app/models/order_model.dart';
 import 'package:gromart_admin_app/view/screens/order/widgets/order_card.dart';
+import 'package:gromart_admin_app/view/screens/order/widgets/order_item_card.dart';
 import '../../widgets/widgets.dart';
 
 class OrdersScreen extends StatelessWidget {
@@ -38,7 +39,7 @@ class OrdersScreen extends StatelessWidget {
             body: TabBarView(
               children: [
                 Obx(
-                  ()=> Padding(
+                  () => Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: ListView.builder(
                       //padding: EdgeInsets.all(10),
@@ -46,14 +47,15 @@ class OrdersScreen extends StatelessWidget {
                       physics: const AlwaysScrollableScrollPhysics(),
                       itemCount: orderController.pendingOrders.length,
                       itemBuilder: (context, index) {
-                        final OrderModel order = orderController.pendingOrders[index];
+                        final OrderModel order =
+                            orderController.pendingOrders[index];
                         return OrderCardWidget(order: order);
                       },
                     ),
                   ),
                 ),
                 Obx(
-                  ()=> Padding(
+                  () => Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: ListView.builder(
                       //padding: EdgeInsets.all(10),
@@ -62,16 +64,16 @@ class OrdersScreen extends StatelessWidget {
                       itemCount: orderController.activeOrders.length,
                       itemBuilder: (context, index) {
                         var orderItem = orderController.activeOrders[index];
-                        return Column(children: [
-                          Text(orderItem['orderId']),
-                          Text(orderItem['quantity'].toString()),
-                        ],);
+                        return OrderItemCardWidget(
+                          orderProductDetailsMap: orderItem,
+                          isActive: true,
+                        );
                       },
                     ),
                   ),
                 ),
                 Obx(
-                  ()=> Padding(
+                  () => Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: ListView.builder(
                       //padding: EdgeInsets.all(10),
@@ -80,10 +82,8 @@ class OrdersScreen extends StatelessWidget {
                       itemCount: orderController.completedOrders.length,
                       itemBuilder: (context, index) {
                         var orderItem = orderController.completedOrders[index];
-                        return Column(children: [
-                          Text(orderItem['orderId']),
-                          Text(orderItem['quantity'].toString()),
-                        ],);
+                        return OrderItemCardWidget(
+                            orderProductDetailsMap: orderItem);
                       },
                     ),
                   ),

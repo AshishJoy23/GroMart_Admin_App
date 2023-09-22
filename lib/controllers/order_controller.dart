@@ -14,6 +14,8 @@ class OrderController extends GetxController {
   var pendingOrders = <OrderModel>[].obs;
   var activeOrders = <Map<String, dynamic>>[].obs;
   var completedOrders = <Map<String, dynamic>>[].obs;
+  var orderDeliveryStatus = ''.obs;
+  var updateOrderItemBtnFlag =false.obs;
 
   @override
   void onInit() async {

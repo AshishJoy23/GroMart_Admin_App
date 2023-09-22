@@ -8,16 +8,19 @@ import 'package:gromart_admin_app/view/config/config.dart';
 import 'package:gromart_admin_app/view/screens/screens.dart';
 import 'package:gromart_admin_app/view/widgets/widgets.dart';
 
-class OrderInfoScreen extends StatelessWidget {
-  final OrderModel order;
-  const OrderInfoScreen({
+class OrderItemInfoScreen extends StatelessWidget {
+  final Map<String, dynamic> orderItemDetailsMap;
+  const OrderItemInfoScreen({
     super.key,
-    required this.order,
+    required this.orderItemDetailsMap,
   });
 
   @override
   Widget build(BuildContext context) {
     final OrderController ordController = Get.find<OrderController>();
+    final OrderModel order = ordController.orders
+        .firstWhere((order) => order.id == orderItemDetailsMap['orderId']);
+    var size = MediaQuery.of(context).size;
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
@@ -34,6 +37,7 @@ class OrderInfoScreen extends StatelessWidget {
           title: 'Order Info',
           actionList: const [],
           leadingOnPressed: () {
+            ordController.updateOrderItemBtnFlag.value=false;
             Get.back();
           },
         ),
@@ -61,31 +65,42 @@ class OrderInfoScreen extends StatelessWidget {
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: size.height*0.09,
+                  child: Row(
+                    children: [
+                      Text(
+                        'Order Status: ',
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      Expanded(
+                        child: OrderDropDownFormWidget(
+                          orderItemDetailsMap: orderItemDetailsMap,
+                          ordController: ordController,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 const Divider(
                   color: Colors.black,
                 ),
                 Text(
-                  'Order Products Detail:',
+                  'Order Product Detail:',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: order.orderDetailsMap.length,
-                  itemBuilder: (context, index) {
-                    return OrderProductDetails(
-                      orderProductDetailsMap: order.orderDetailsMap[index],
-                    );
-                  },
+                OrderProductDetails(
+                  orderProductDetailsMap: orderItemDetailsMap,
                 ),
                 OrderDeliverAddress(order: order),
                 OrderPaymentSummary(order: order),
                 Row(
                   children: [
                     MainButtonWidget(
-                      buttonText: 'Cancel',
+                      buttonText: 'Cancel Order',
                       onPressed: () {
                         Utils.showAlertDialogBox(context, 'Are You Sure?',
-                            'Do you wnat to cancel the entire order.', () {
+                            'Do you wnat to cancel the order item.', () {
                           log('cancelled');
                           ordController.cancelOrder(order: order);
                           Utils.showSnackBar(
@@ -97,27 +112,30 @@ class OrderInfoScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                Row(
+                Obx(() => (ordController.updateOrderItemBtnFlag.value)
+                ? Row(
                   children: [
                     MainButtonWidget(
-                      buttonText: 'Confirm',
+                      buttonText: 'Update Order',
                       onPressed: () {
                         Utils.showAlertDialogBox(
                           context,
                           'Are You Sure?',
-                          'Do you wnat to confirm the entire order.',
+                          'Do you wnat to update the order status.',
                           () {
+                            ordController.updateOrderItemBtnFlag.value=false;
                             ordController.confirmOrder(order: order);
                             Utils.showSnackBar(
-                                'Order is confirmed', Colors.green);
+                                'Order status is updated', Colors.green);
                             Get.back();
-                            log('confirmed');
+                            log('updated');
                           },
                         );
                       },
                     ),
                   ],
-                ),
+                )
+                : const SizedBox(),),
               ],
             ),
           ),

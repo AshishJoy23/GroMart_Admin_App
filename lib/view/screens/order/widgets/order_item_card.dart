@@ -1,193 +1,176 @@
-// import 'package:flutter/material.dart';
+import 'dart:developer';
 
-// class OrderItemCardWidget extends StatelessWidget {
-//   const OrderItemCardWidget({
-//     super.key,
-//     required this.order,
-//   });
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:gromart_admin_app/controllers/controllers.dart';
+import 'package:gromart_admin_app/models/models.dart';
+import 'package:gromart_admin_app/view/config/config.dart';
+import 'package:gromart_admin_app/view/screens/order/order_item_info.dart';
+import 'package:gromart_admin_app/view/widgets/widgets.dart';
 
-//   final OrderModel order;
+class OrderItemCardWidget extends StatelessWidget {
+  const OrderItemCardWidget({
+    super.key,
+    required this.orderProductDetailsMap,
+    this.isActive = false,
+  });
 
-//   @override
-//   Widget build(BuildContext context) {
-//     var size = MediaQuery.of(context).size;
-//     return Padding(
-//       padding: const EdgeInsets.all(0.0),
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           ListView.builder(
-//             physics: const NeverScrollableScrollPhysics(),
-//             shrinkWrap: true,
-//             itemCount: order.orderDetailsMap.length,
-//             itemBuilder: (context, index) {
-//               ProductModel product = (BlocProvider.of<ProductBloc>(context)
-//                       .state as ProductLoaded)
-//                   .products
-//                   .firstWhere((product) =>
-//                       product.id == order.orderDetailsMap[index]['productId']);
-//               Map<String, dynamic> orderProductDetails =
-//                   order.orderDetailsMap[index];
-//               return Padding(
-//                 padding: const EdgeInsets.all(5.0),
-//                 child: Material(
-//                   elevation: 12,
-//                   borderRadius: const BorderRadius.all(Radius.circular(20)),
-//                   child: GestureDetector(
-//                     onTap: () {
-//                       log(orderProductDetails['productId'].toString());
-//                       Navigator.of(context).push(
-//                         OrderInfoScreen.route(
-//                           orderId: order.id,
-//                           productId:
-//                               orderProductDetails['productId'],
-//                         ),
-//                       );
-//                     },
-//                     child: Container(
-//                       height: size.height * 0.16,
-//                       width: size.width / 1,
-//                       decoration: const BoxDecoration(
-//                         color: Color(0xffC8E6C9),
-//                         borderRadius: BorderRadius.all(Radius.circular(20)),
-//                       ),
-//                       child: Padding(
-//                         padding: const EdgeInsets.all(8.0),
-//                         child: Row(
-//                           children: [
-//                             ClipRRect(
-//                               borderRadius: BorderRadius.circular(10),
-//                               child: Image.network(
-//                                 product.imageUrls[0],
-//                                 width: size.height * 0.14,
-//                                 height: size.height * 0.15,
-//                                 fit: BoxFit.cover,
-//                               ),
-//                             ),
-//                             const SizedBox(
-//                               width: 10,
-//                             ),
-//                             Expanded(
-//                               child: Column(
-//                                 mainAxisAlignment: MainAxisAlignment.center,
-//                                 crossAxisAlignment: CrossAxisAlignment.start,
-//                                 children: [
-//                                   Text(
-//                                     (order.orderDetailsMap[index]
-//                                             ['isCancelled'])
-//                                         ? 'Cancelled'
-//                                         : (order.orderDetailsMap[index]
-//                                                 ['isDelivered'])
-//                                             ? 'Delivered'
-//                                             : (order.orderDetailsMap[index]
-//                                                     ['isShipped'])
-//                                                 ? 'Shipped'
-//                                                 : (order.orderDetailsMap[index]
-//                                                         ['isProcessed'])
-//                                                     ? 'Processed'
-//                                                     : (order.orderDetailsMap[
-//                                                                 index]
-//                                                             ['isConfirmed'])
-//                                                         ? 'Confirmed'
-//                                                         : 'Placed',
-//                                     style:
-//                                         Theme.of(context).textTheme.titleLarge,
-//                                   ),
-//                                   const Spacer(),
-//                                   Text(
-//                                     product.name,
-//                                     style:
-//                                         Theme.of(context).textTheme.titleMedium,
-//                                   ),
-//                                   Row(
-//                                     children: [
-//                                       Expanded(
-//                                         child: Text(
-//                                           '${order.orderDetailsMap[index]['quantity']} x ${product.price}',
-//                                           style: Theme.of(context)
-//                                               .textTheme
-//                                               .bodyLarge,
-//                                         ),
-//                                       ),
-//                                       Text(
-//                                         '${order.orderDetailsMap[index]['quantity'] * product.price}',
-//                                         style: Theme.of(context)
-//                                             .textTheme
-//                                             .bodyLarge!
-//                                             .copyWith(
-//                                               fontWeight: FontWeight.bold,
-//                                             ),
-//                                       ),
-//                                     ],
-//                                   ),
-//                                   Row(
-//                                     children: [
-//                                       Expanded(
-//                                         child: Text(
-//                                           (order.orderDetailsMap[index]
-//                                                   ['isCancelled'])
-//                                               ? 'Cancelled on :'
-//                                               : (order.orderDetailsMap[index]
-//                                                       ['isDelivered'])
-//                                                   ? 'Delivered on :'
-//                                                   : (order.orderDetailsMap[
-//                                                           index]['isShipped'])
-//                                                       ? 'Shipped on :'
-//                                                       : (order.orderDetailsMap[
-//                                                                   index]
-//                                                               ['isProcessed'])
-//                                                           ? 'Processed on :'
-//                                                           : (order.orderDetailsMap[
-//                                                                       index][
-//                                                                   'isConfirmed'])
-//                                                               ? 'Confirmed on :'
-//                                                               : 'Placed on :',
-//                                           style: Theme.of(context)
-//                                               .textTheme
-//                                               .bodyLarge,
-//                                         ),
-//                                       ),
-//                                       Text(
-//                                         (order.orderDetailsMap[index]
-//                                                 ['isCancelled'])
-//                                             ? '${order.orderDetailsMap[index]['cancelledAt']}'
-//                                             : (order.orderDetailsMap[index]
-//                                                     ['isDelivered'])
-//                                                 ? '${order.orderDetailsMap[index]['deliveredAt']}'
-//                                                 : (order.orderDetailsMap[index]
-//                                                         ['isShipped'])
-//                                                     ? '${order.orderDetailsMap[index]['shippedAt']}'
-//                                                     : (order.orderDetailsMap[
-//                                                                 index]
-//                                                             ['isProcessed'])
-//                                                         ? '${order.orderDetailsMap[index]['processedAt']}'
-//                                                         : (order.orderDetailsMap[
-//                                                                     index]
-//                                                                 ['isConfirmed'])
-//                                                             ? '${order.orderDetailsMap[index]['confirmedAt']}'
-//                                                             : order.placedAt,
-//                                         style: Theme.of(context)
-//                                             .textTheme
-//                                             .bodyLarge!
-//                                             .copyWith(
-//                                                 fontWeight: FontWeight.bold),
-//                                       ),
-//                                     ],
-//                                   ),
-//                                 ],
-//                               ),
-//                             ),
-//                           ],
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//               );
-//             },
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
+  final Map<String, dynamic> orderProductDetailsMap;
+  final bool isActive;
+
+  @override
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    final ProductController pController = Get.put(ProductController());
+    ProductModel product = pController.products.firstWhere(
+        (product) => product.id == orderProductDetailsMap['productId']);
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Material(
+        elevation: 12,
+        borderRadius: const BorderRadius.all(Radius.circular(5)),
+        child: GestureDetector(
+          onTap: () {
+            Get.to(()=> OrderItemInfoScreen(orderItemDetailsMap: orderProductDetailsMap));
+          },
+          child: Container(
+            height: size.height * 0.18,
+            width: size.width / 1,
+            decoration: const BoxDecoration(
+              color: Color(0xffC8E6C9),
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.network(
+                      product.imageUrls[0],
+                      width: size.height * 0.14,
+                      height: size.height * 0.15,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                (orderProductDetailsMap['isCancelled'])
+                                    ? 'Cancelled'
+                                    : (orderProductDetailsMap['isDelivered'])
+                                        ? 'Delivered'
+                                        : (orderProductDetailsMap['isShipped'])
+                                            ? 'Shipped'
+                                            : (orderProductDetailsMap[
+                                                    'isProcessed'])
+                                                ? 'Processed'
+                                                : 'Confirmed',
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                            ),
+                            isActive ?
+                            MainButtonWidget(
+                              buttonText: 'Cancel',
+                              onPressed: () {
+                                Utils.showAlertDialogBox(
+                                    context,
+                                    'Are You Sure?',
+                                    'Do you wnat to cancel the entire order.',
+                                    () {
+                                  log('cancelled');
+                                  //orderController.cancelOrder(order: order);
+                                  Utils.showSnackBar(
+                                      'Order Item is cancelled', Colors.redAccent);
+                                  Get.back();
+                                });
+                              },
+                              heightFactor: 0.035,
+                              isSubButton: true,
+                            )
+                            : const SizedBox(),
+                          ],
+                        ),
+                        const Spacer(),
+                        Text(
+                          product.name,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                '${orderProductDetailsMap['quantity']} x ${product.price}',
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            ),
+                            Text(
+                              '${orderProductDetailsMap['quantity'] * product.price}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                (orderProductDetailsMap['isCancelled'])
+                                    ? 'Cancelled on :'
+                                    : (orderProductDetailsMap['isDelivered'])
+                                        ? 'Delivered on :'
+                                        : (orderProductDetailsMap['isShipped'])
+                                            ? 'Shipped on :'
+                                            : (orderProductDetailsMap[
+                                                    'isProcessed'])
+                                                ? 'Processed on :'
+                                                : (orderProductDetailsMap[
+                                                        'isConfirmed'])
+                                                    ? 'Confirmed on :'
+                                                    : 'Placed on :',
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            ),
+                            Text(
+                              (orderProductDetailsMap['isCancelled'])
+                                  ? '${orderProductDetailsMap['cancelledAt']}'
+                                  : (orderProductDetailsMap['isDelivered'])
+                                      ? '${orderProductDetailsMap['deliveredAt']}'
+                                      : (orderProductDetailsMap['isShipped'])
+                                          ? '${orderProductDetailsMap['shippedAt']}'
+                                          : (orderProductDetailsMap[
+                                                  'isProcessed'])
+                                              ? '${orderProductDetailsMap['processedAt']}'
+                                              : '${orderProductDetailsMap['confirmedAt']}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
