@@ -49,42 +49,46 @@ class AddProductScreen extends StatelessWidget {
             ),
             ProductDetailsWidget(productController: productController),
             const SizedBox(height: 24.0),
-            MainButtonWidget(
-              buttonText: 'Add Product',
-              onPressed: () async {
-                DateTime currentTime = DateTime.now();
-                int milliseconds = currentTime.millisecondsSinceEpoch;
-                log(milliseconds.toString());
-                productController.newProduct.update(
-                  'id',
-                  (_) => milliseconds,
-                  ifAbsent: () => milliseconds,
-                );
-                database.addProduct(
-                  ProductModel(
-                    id: productController.newProduct['id'],
-                    name: productController.newProduct['name'],
-                    category: productController.newProduct['category'],
-                    description: productController.newProduct['description'],
-                    imageUrls: productController.newProduct['imageUrls'],
-                    isRecommended:
-                        productController.newProduct['isRecommended'] ?? false,
-                    isPopular:
-                        productController.newProduct['isPopular'] ?? false,
-                    isTopRated:
-                        productController.newProduct['isTopRated'] ?? false,
-                    isTodaySpecial:
-                        productController.newProduct['isTodaySpecial'] ?? false,
-                    price: double.parse(productController.newProduct['price']),
-                    quantity:
-                        int.parse(productController.newProduct['quantity']),
-                  ),
-                );
+            Row(
+              children: [
+                MainButtonWidget(
+                  buttonText: 'Add Product',
+                  onPressed: () async {
+                    DateTime currentTime = DateTime.now();
+                    int milliseconds = currentTime.millisecondsSinceEpoch;
+                    log(milliseconds.toString());
+                    productController.newProduct.update(
+                      'id',
+                      (_) => milliseconds,
+                      ifAbsent: () => milliseconds,
+                    );
+                    database.addProduct(
+                      ProductModel(
+                        id: productController.newProduct['id'],
+                        name: productController.newProduct['name'],
+                        category: productController.newProduct['category'],
+                        description: productController.newProduct['description'],
+                        imageUrls: productController.newProduct['imageUrls'],
+                        isRecommended:
+                            productController.newProduct['isRecommended'] ?? false,
+                        isPopular:
+                            productController.newProduct['isPopular'] ?? false,
+                        isTopRated:
+                            productController.newProduct['isTopRated'] ?? false,
+                        isTodaySpecial:
+                            productController.newProduct['isTodaySpecial'] ?? false,
+                        price: double.parse(productController.newProduct['price']),
+                        quantity:
+                            int.parse(productController.newProduct['quantity']),
+                      ),
+                    );
 
-                log(productController.newProduct.toString());
-                productController.onClose();
-                Get.back();
-              },
+                    log(productController.newProduct.toString());
+                    productController.onClose();
+                    Get.back();
+                  },
+                ),
+              ],
             ),
           ],
         ),

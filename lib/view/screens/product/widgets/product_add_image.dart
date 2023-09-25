@@ -26,85 +26,81 @@ class ProductAddImageWidget extends StatelessWidget {
         ),
         child: (productController.productImageUrls.isEmpty)
             ? AddImageButtonWidget(
-              title: 'Choose an image',
+                title: 'Choose an image',
                 onTapFunction: () async {
                   await pickImageFromGallery(context);
                 },
               )
-            : SizedBox(
-                height: size.height * 0.3,
-                width: double.infinity,
-                child: PageView.builder(
-                  itemCount: productController.productImageUrls.length,
-                  itemBuilder: (context, index) {
-                    return Stack(
-                      children: [
-                        SizedBox(
-                          height: size.height * 0.3,
-                          width: size.width,
-                          child: Image.network(
-                            productController.productImageUrls[index],
-                            fit: BoxFit.cover,
-                            loadingBuilder: (context, child, progress) {
-                              if (progress == null) return child;
-                              return const Center(
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: Color(0xff388E3C),
-                                  backgroundColor: Colors.white,
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 10,
-                          right: 10,
-                          child: SizedBox(
-                            height: size.height * 0.28,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                FloatingActionButton.small(
-                                  onPressed: () async {
-                                    // Delete the image from storage and remove it from the list
-                                    var imageUrl = productController
-                                        .productImageUrls[index];
-                                    await storage.deleteProductImage(imageUrl);
-                                    productController.productImageUrls
-                                        .remove(imageUrl);
-                                    productController.newProduct.update(
-                                      'imageUrls',
-                                      (_) => productController.productImageUrls,
-                                      ifAbsent: () =>
-                                          productController.productImageUrls,
-                                    );
-                                  },
-                                  backgroundColor: Colors.black87,
-                                  child: const Icon(
-                                    Icons.delete_forever,
-                                    size: 24,
-                                  ),
-                                ),
-                                FloatingActionButton(
-                                  onPressed: () async {
-                                    await pickImageFromGallery(context);
-                                  },
-                                  backgroundColor: Colors.black87,
-                                  child: const Icon(
-                                    Icons.add_photo_alternate,
-                                    size: 30,
-                                  ),
-                                ),
-                              ],
+            : Column(
+                children: [
+                  SizedBox(
+                    height: size.height * 0.3,
+                    width: double.infinity,
+                    child: PageView.builder(
+                      itemCount: productController.productImageUrls.length,
+                      itemBuilder: (context, index) {
+                        return Stack(
+                          children: [
+                            SizedBox(
+                              height: size.height * 0.3,
+                              width: size.width,
+                              child: Image.network(
+                                productController.productImageUrls[index],
+                                fit: BoxFit.cover,
+                                loadingBuilder: (context, child, progress) {
+                                  if (progress == null) return child;
+                                  return const Center(
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: Color(0xff388E3C),
+                                      backgroundColor: Colors.white,
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                ),
+                            Positioned(
+                              top: 10,
+                              right: 10,
+                              child: FloatingActionButton.small(
+                                onPressed: () async {
+                                  // Delete the image from storage and remove it from the list
+                                  var imageUrl =
+                                      productController.productImageUrls[index];
+                                  await storage.deleteProductImage(imageUrl);
+                                  productController.productImageUrls
+                                      .remove(imageUrl);
+                                  productController.newProduct.update(
+                                    'imageUrls',
+                                    (_) => productController.productImageUrls,
+                                    ifAbsent: () =>
+                                        productController.productImageUrls,
+                                  );
+                                },
+                                backgroundColor: Colors.black87,
+                                child: const Icon(
+                                  Icons.delete_forever,
+                                  size: 24,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      MainButtonWidget(
+                        isSubButton: true,
+                        buttonText: 'Add New Image',
+                        onPressed: () async {
+                          await pickImageFromGallery(context);
+                        },
+                      ),
+                    ],
+                  ),
+                ],
               ),
       ),
     );

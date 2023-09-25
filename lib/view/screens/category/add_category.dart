@@ -52,29 +52,33 @@ class AddCategoryScreen extends StatelessWidget {
             ),
             CategoryTextFormField(categoryController: categoryController),
             const SizedBox(height: 24.0),
-            MainButtonWidget(
-              buttonText: 'Add Category',
-              onPressed: () async {
-                DateTime currentTime = DateTime.now();
-                int milliseconds = currentTime.millisecondsSinceEpoch;
-                log(milliseconds.toString());
-                categoryController.newProduct.update(
-                  'id',
-                  (_) => milliseconds,
-                  ifAbsent: () => milliseconds,
-                );
-                database.addCategory(
-                  CategoryModel(
-                    id: categoryController.newProduct['id'],
-                    name: categoryController.newProduct['name'],
-                    imageUrl: categoryController.newProduct['imageUrl'].value,
-                  ),
-                );
-                log(categoryController.newProduct.toString());
-                categoryController.onClose();
-                log(categoryController.newProduct.toString());
-                Get.back();
-              },
+            Row(
+              children: [
+                MainButtonWidget(
+                  buttonText: 'Add Category',
+                  onPressed: () async {
+                    DateTime currentTime = DateTime.now();
+                    int milliseconds = currentTime.millisecondsSinceEpoch;
+                    log(milliseconds.toString());
+                    categoryController.newProduct.update(
+                      'id',
+                      (_) => milliseconds,
+                      ifAbsent: () => milliseconds,
+                    );
+                    database.addCategory(
+                      CategoryModel(
+                        id: categoryController.newProduct['id'],
+                        name: categoryController.newProduct['name'],
+                        imageUrl: categoryController.newProduct['imageUrl'].value,
+                      ),
+                    );
+                    log(categoryController.newProduct.toString());
+                    categoryController.onClose();
+                    log(categoryController.newProduct.toString());
+                    Get.back();
+                  },
+                ),
+              ],
             ),
           ],
         ),

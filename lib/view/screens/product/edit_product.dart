@@ -82,40 +82,44 @@ class EditProductScreen extends StatelessWidget {
               editPage: true,
             ),
             const SizedBox(height: 24.0),
-            MainButtonWidget(
-              buttonText: 'Update Product',
-              onPressed: () async {
-                log('*****************');
-                log(product.id.toString());
-                await database.updateProduct(
-                  ProductModel(
-                    id: productController.newProduct['id'] ?? product.id,
-                    name: productController.newProduct['name'] ?? product.name,
-                    category: productController.newProduct['category'] ??
-                        product.category,
-                    description: productController.newProduct['description'] ??
-                        product.description,
-                    imageUrls: productController.newProduct['imageUrls'] ??
-                        product.imageUrls,
-                    isRecommended:
-                        productController.newProduct['isRecommended'] ?? false,
-                    isPopular:
-                        productController.newProduct['isPopular'] ?? false,
-                    isTopRated:
-                        productController.newProduct['isTopRated'] ?? false,
-                    isTodaySpecial:
-                        productController.newProduct['isTodaySpecial'] ?? false,
-                    price: double.parse(productController.newProduct['price']),
-                    quantity:
-                        int.parse(productController.newProduct['quantity']),
-                  ),
-                );
-                log('<<<<<<<<<<<<<<<<<<<here not edited>>>>>>>>>>>>>>>>>>>');
-                log(productController.newProduct.toString());
-                productController.onClose();
-                log(productController.newProduct.toString());
-                Get.back();
-              },
+            Row(
+              children: [
+                MainButtonWidget(
+                  buttonText: 'Update Product',
+                  onPressed: () async {
+                    log('*****************');
+                    log(product.id.toString());
+                    await database.updateProduct(
+                      ProductModel(
+                        id: productController.newProduct['id'] ?? product.id,
+                        name: productController.newProduct['name'] ?? product.name,
+                        category: productController.newProduct['category'] ??
+                            product.category,
+                        description: productController.newProduct['description'] ??
+                            product.description,
+                        imageUrls: productController.newProduct['imageUrls'] ??
+                            product.imageUrls,
+                        isRecommended:
+                            productController.newProduct['isRecommended'] ?? false,
+                        isPopular:
+                            productController.newProduct['isPopular'] ?? false,
+                        isTopRated:
+                            productController.newProduct['isTopRated'] ?? false,
+                        isTodaySpecial:
+                            productController.newProduct['isTodaySpecial'] ?? false,
+                        price: double.parse(productController.newProduct['price']),
+                        quantity:
+                            int.parse(productController.newProduct['quantity']),
+                      ),
+                    );
+                    log('<<<<<<<<<<<<<<<<<<<here not edited>>>>>>>>>>>>>>>>>>>');
+                    log(productController.newProduct.toString());
+                    productController.onClose();
+                    log(productController.newProduct.toString());
+                    Get.back();
+                  },
+                ),
+              ],
             ),
           ],
         ),

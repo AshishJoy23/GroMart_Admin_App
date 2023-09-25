@@ -28,12 +28,12 @@ class CategoryAddImageWidget extends StatelessWidget {
         ),
         child: (categoryController.categoryImageUrl.isEmpty)
             ? AddImageButtonWidget(
-              title: 'Choose an image',
-              onTapFunction: () async {
-                await pickImageFromGallery(context);
-              },
-            )
-            : Stack(
+                title: 'Choose an image',
+                onTapFunction: () async {
+                  await pickImageFromGallery(context);
+                },
+              )
+            : Column(
                 children: [
                   SizedBox(
                     width: double.infinity,
@@ -43,19 +43,16 @@ class CategoryAddImageWidget extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  Positioned(
-                    bottom: 10,
-                    right: 10,
-                    child: FloatingActionButton(
-                      onPressed: () async {
-                        await pickImageFromGallery(context);
-                      },
-                      backgroundColor: Colors.black87,
-                      child: const Icon(
-                        Icons.add_photo_alternate,
-                        size: 30,
+                  Row(
+                    children: [
+                      MainButtonWidget(
+                        isSubButton: true,
+                        buttonText: 'Change Image',
+                        onPressed: () async {
+                          await pickImageFromGallery(context);
+                        },
                       ),
-                    ),
+                    ],
                   ),
                 ],
               ),
@@ -88,5 +85,3 @@ class CategoryAddImageWidget extends StatelessWidget {
     }
   }
 }
-
-

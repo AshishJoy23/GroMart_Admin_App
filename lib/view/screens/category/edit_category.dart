@@ -62,25 +62,29 @@ class EditCategoryScreen extends StatelessWidget {
             ),
             CategoryTextFormField(categoryController: categoryController),
             const SizedBox(height: 24.0),
-            MainButtonWidget(
-              buttonText: 'Update Product',
-              onPressed: () async {
-                log('*****************');
-                log(category.id.toString());
-                await database.updateCategory(
-                  CategoryModel(
-                    id: categoryController.newProduct['id'] ?? category.id,
-                    name: categoryController.newProduct['name'] ?? category.name,
-                    imageUrl: categoryController.newProduct['imageUrl'].value ??
-                        category.imageUrl,
-                  ),
-                );
-                log('<<<<<<<<<<<<<<<<<<<here not edited>>>>>>>>>>>>>>>>>>>');
-                log(categoryController.newProduct.toString());
-                categoryController.onClose();
-                log(categoryController.newProduct.toString());
-                Get.back();
-              },
+            Row(
+              children: [
+                MainButtonWidget(
+                  buttonText: 'Update Product',
+                  onPressed: () async {
+                    log('*****************');
+                    log(category.id.toString());
+                    await database.updateCategory(
+                      CategoryModel(
+                        id: categoryController.newProduct['id'] ?? category.id,
+                        name: categoryController.newProduct['name'] ?? category.name,
+                        imageUrl: categoryController.newProduct['imageUrl'].value ??
+                            category.imageUrl,
+                      ),
+                    );
+                    log('<<<<<<<<<<<<<<<<<<<here not edited>>>>>>>>>>>>>>>>>>>');
+                    log(categoryController.newProduct.toString());
+                    categoryController.onClose();
+                    log(categoryController.newProduct.toString());
+                    Get.back();
+                  },
+                ),
+              ],
             ),
           ],
         ),

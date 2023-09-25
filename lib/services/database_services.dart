@@ -198,49 +198,4 @@ class DatabaseServices {
       log('Error updating order: $error');
     }
   }
-
-  //   try {
-  //     log('<<<<<<try block>>>>>>');
-  //     QuerySnapshot subcollectionQuerySnapshot =
-  //         await FirebaseFirestore.instance.collectionGroup('orders').get();
-
-  //     // Iterate through the documents in the subcollection
-  //     for (QueryDocumentSnapshot subDocumentSnapshot
-  //         in subcollectionQuerySnapshot.docs) {
-  //       Map<String, dynamic>? subDocumentData =
-  //           subDocumentSnapshot.data() as Map<String, dynamic>?;
-  //       //log(subDocumentData.toString());
-  //       if (subDocumentData != null) {
-  //         log('<<<<<<<<<<<<<<<<<<before convert>>>>>>>>>>>>>>>>>>');
-  //         log(subDocumentData.toString());
-  //   // Access the "name" field
-  //   final OrderModel order = OrderModel.fromSnapshot(subDocumentData);
-  //   log('<<<<<<<after convert to OrdeerModel>>>>>>>');
-  //   log(order.toString());
-  //   num? name = subDocumentData["grandTotal"];
-
-  //   // Do something with the "name" value
-  //   if (name != null) {
-  //     log("Name: $name");
-  //   }
-  // }
-  //       log('<<<<<<<<<<<each name>>>>>>>>>>>');
-  //       log(subDocumentData!['grandTotal'].toString());
-  //       // final OrderModel order = OrderModel(
-  //       //   email: email,
-  //       //   orderDetailsMap: orderDetailsMap,
-  //       //   address: address,
-  //       //   paymentMethod: paymentMethod,
-  //       //   placedAt: placedAt,
-  //       //   subTotal: subTotal,
-  //       //   deliveryFee: deliveryFee,
-  //       //   grandTotal: grandTotal,
-  //       // );
-  //       // Access fields in the subdocument as needed
-  //       // ...
-  //     }
-  //   } catch (error) {
-  //     log('<<<<<<catch block>>>>>>');
-  //     log("Error getting documents: $error");
-  //   }
 }

@@ -41,51 +41,98 @@ class OrdersScreen extends StatelessWidget {
                 Obx(
                   () => Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: ListView.builder(
-                      //padding: EdgeInsets.all(10),
-                      shrinkWrap: true,
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      itemCount: orderController.pendingOrders.length,
-                      itemBuilder: (context, index) {
-                        final OrderModel order =
-                            orderController.pendingOrders[index];
-                        return OrderCardWidget(order: order);
-                      },
-                    ),
+                    child: (orderController.pendingOrders.isEmpty)
+                        ? Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset('assets/images/orders_empty.png'),
+                                Text(
+                                  "Currently you don't have any\npending orders.",
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          )
+                        : ListView.builder(
+                            //padding: EdgeInsets.all(10),
+                            shrinkWrap: true,
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            itemCount: orderController.pendingOrders.length,
+                            itemBuilder: (context, index) {
+                              final OrderModel order =
+                                  orderController.pendingOrders[index];
+                              return OrderCardWidget(order: order);
+                            },
+                          ),
                   ),
                 ),
                 Obx(
                   () => Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: ListView.builder(
-                      //padding: EdgeInsets.all(10),
-                      shrinkWrap: true,
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      itemCount: orderController.activeOrders.length,
-                      itemBuilder: (context, index) {
-                        var orderItem = orderController.activeOrders[index];
-                        return OrderItemCardWidget(
-                          orderProductDetailsMap: orderItem,
-                          isActive: true,
-                        );
-                      },
-                    ),
+                    child: (orderController.activeOrders.isEmpty)
+                        ? Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset('assets/images/orders_empty.png'),
+                                Text(
+                                  "Currently you don't have any\nactive orders.",
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          )
+                        : ListView.builder(
+                            //padding: EdgeInsets.all(10),
+                            shrinkWrap: true,
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            itemCount: orderController.activeOrders.length,
+                            itemBuilder: (context, index) {
+                              var orderItem =
+                                  orderController.activeOrders[index];
+                              return OrderItemCardWidget(
+                                orderProductDetailsMap: orderItem,
+                                isActive: true,
+                              );
+                            },
+                          ),
                   ),
                 ),
                 Obx(
                   () => Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: ListView.builder(
-                      //padding: EdgeInsets.all(10),
-                      shrinkWrap: true,
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      itemCount: orderController.completedOrders.length,
-                      itemBuilder: (context, index) {
-                        var orderItem = orderController.completedOrders[index];
-                        return OrderItemCardWidget(
-                            orderProductDetailsMap: orderItem);
-                      },
-                    ),
+                    child: (orderController.completedOrders.isEmpty)
+                        ? Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset('assets/images/orders_empty.png'),
+                                Text(
+                                  "Currently you don't have any\ncompleted orders.",
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          )
+                        : ListView.builder(
+                            //padding: EdgeInsets.all(10),
+                            shrinkWrap: true,
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            itemCount: orderController.completedOrders.length,
+                            itemBuilder: (context, index) {
+                              var orderItem =
+                                  orderController.completedOrders[index];
+                              return OrderItemCardWidget(
+                                  orderProductDetailsMap: orderItem);
+                            },
+                          ),
                   ),
                 ),
               ],

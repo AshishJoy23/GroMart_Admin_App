@@ -22,6 +22,7 @@ class OrderItemCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     final ProductController pController = Get.put(ProductController());
+    final OrderController odrController = Get.put(OrderController());
     ProductModel product = pController.products.firstWhere(
         (product) => product.id == orderProductDetailsMap['productId']);
     return Padding(
@@ -31,7 +32,10 @@ class OrderItemCardWidget extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(5)),
         child: GestureDetector(
           onTap: () {
-            Get.to(()=> OrderItemInfoScreen(orderItemDetailsMap: orderProductDetailsMap));
+            Get.to(() => OrderItemInfoScreen(
+                  orderItemDetailsMap: orderProductDetailsMap,
+                  isActive: isActive,
+                ));
           },
           child: Container(
             height: size.height * 0.18,
@@ -78,26 +82,28 @@ class OrderItemCardWidget extends StatelessWidget {
                                 style: Theme.of(context).textTheme.titleLarge,
                               ),
                             ),
-                            isActive ?
-                            MainButtonWidget(
-                              buttonText: 'Cancel',
-                              onPressed: () {
-                                Utils.showAlertDialogBox(
-                                    context,
-                                    'Are You Sure?',
-                                    'Do you wnat to cancel the entire order.',
-                                    () {
-                                  log('cancelled');
-                                  //orderController.cancelOrder(order: order);
-                                  Utils.showSnackBar(
-                                      'Order Item is cancelled', Colors.redAccent);
-                                  Get.back();
-                                });
-                              },
-                              heightFactor: 0.035,
-                              isSubButton: true,
-                            )
-                            : const SizedBox(),
+                            isActive
+                                ? MainButtonWidget(
+                                    buttonText: 'Cancel',
+                                    onPressed: () {
+                                      Utils.showAlertDialogBox(
+                                          context,
+                                          'Are You Sure?',
+                                          'Do you wnat to cancel the entire order.',
+                                          () {
+                                        log('cancelled');
+                                        odrController.cancelOrderItem(
+                                            orderItem: orderProductDetailsMap);
+                                        Utils.showSnackBar(
+                                            'Order Item is cancelled',
+                                            Colors.redAccent);
+                                        Get.back();
+                                      });
+                                    },
+                                    heightFactor: 0.035,
+                                    isSubButton: true,
+                                  )
+                                : const SizedBox(),
                           ],
                         ),
                         const Spacer(),

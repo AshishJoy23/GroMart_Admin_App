@@ -8,52 +8,104 @@ class StorageService {
       firebase_storage.FirebaseStorage.instance;
 
   Future<void> uploadProductImage(XFile image) async {
-    await storage.ref('product_images/${image.name}').putFile(File(image.path));
+    try {
+      await storage
+          .ref('product_images/${image.name}')
+          .putFile(File(image.path));
+      log('image uploaded successfully');
+    } catch (e) {
+      log('Error while uploading product image: $e');
+    }
   }
 
   Future<String> getProductImageURL(String imageName) async {
-    String downloadURL =
-        await storage.ref('product_images/$imageName').getDownloadURL();
-    return downloadURL;
+    try {
+      String downloadURL =
+          await storage.ref('product_images/$imageName').getDownloadURL();
+      log('image gets successfully');
+      return downloadURL;
+    } catch (e) {
+      log('Error while getting product image: $e');
+    }
+    return '';
   }
 
   Future<void> deleteProductImage(String imageUrl) async {
-    final Uri uri = Uri.parse(imageUrl);
-    final String imageName = uri.pathSegments.last;
-    await storage.ref(imageName).delete();
+    try {
+      final Uri uri = Uri.parse(imageUrl);
+      final String imageName = uri.pathSegments.last;
+      await storage.ref(imageName).delete();
+      log('image deleted successfully');
+    } catch (e) {
+      log('Error while deleting product image: $e');
+    }
   }
 
   Future<void> uploadCategoryImage(XFile image) async {
-    await storage
-        .ref('category_images/${image.name}')
-        .putFile(File(image.path));
+    try {
+      await storage
+          .ref('category_images/${image.name}')
+          .putFile(File(image.path));
+      log('image uploaded successfully');
+    } catch (e) {
+      log('Error while uploading product image: $e');
+    }
   }
 
   Future<String> getCategoryImageURL(String imageName) async {
-    String downloadURL =
-        await storage.ref('category_images/$imageName').getDownloadURL();
-    return downloadURL;
+    try {
+      String downloadURL =
+          await storage.ref('category_images/$imageName').getDownloadURL();
+      log('image gets successfully');
+      return downloadURL;
+    } catch (e) {
+      log('Error while getting product image: $e');
+    }
+    return '';
   }
 
   Future<void> deleteCategoryImage(String imageUrl) async {
-    final Uri uri = Uri.parse(imageUrl);
-    final String imageName = uri.pathSegments.last;
-    await storage.ref(imageName).delete();
+    try {
+      final Uri uri = Uri.parse(imageUrl);
+      final String imageName = uri.pathSegments.last;
+      await storage.ref(imageName).delete();
+      log('image deleted successfully');
+    } catch (e) {
+      log('Error while deleting product image: $e');
+    }
   }
 
   Future<void> uploadBannerImage(XFile image) async {
-    await storage.ref('banner_images/${image.name}').putFile(File(image.path));
+    try {
+      await storage
+          .ref('banner_images/${image.name}')
+          .putFile(File(image.path));
+      log('image uploaded successfully');
+    } catch (e) {
+      log('Error while uploading product image: $e');
+    }
   }
 
   Future<String> getBannerImageURL(String imageName) async {
-    String downloadURL =
-        await storage.ref('banner_images/$imageName').getDownloadURL();
-    return downloadURL;
+    try {
+      String downloadURL =
+          await storage.ref('banner_images/$imageName').getDownloadURL();
+      log('image gets successfully');
+      return downloadURL;
+    } catch (e) {
+      log('Error while getting product image: $e');
+    }
+    return '';
   }
 
   Future<void> deleteBannerImage(String imageUrl) async {
-    final Uri uri = Uri.parse(imageUrl);
-    final String imageName = uri.pathSegments.last;
-    await storage.ref(imageName).delete();
+    try {
+      final Uri uri = Uri.parse(imageUrl);
+      final String imageName = uri.pathSegments.last;
+      await storage.ref(imageName).delete();
+      log('image deleted successfully');
+    } catch (e) {
+      log('Error while deleting product image: $e');
+    }
   }
 }
